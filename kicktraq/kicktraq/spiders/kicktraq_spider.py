@@ -9,7 +9,7 @@ class KicktraqSpider(Spider):
     # need to write portion to iterate through pages 1-700
 
     def parse(self, response):
-        total_pages = 350 # the archive doesn't go further than that
+        total_pages =  700 # the archive doesn't go further than that
         url_list = [f'https://www.kicktraq.com/archive/?page={i+1}' for i in range(total_pages)]
         for url in url_list:
             yield Request(url = url, callback = self.parse_projects)
