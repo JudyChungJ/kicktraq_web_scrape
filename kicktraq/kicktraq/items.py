@@ -13,8 +13,10 @@ import scrapy
 class KicktraqItem(scrapy.Item):
     names = scrapy.Field()
     category = scrapy.Field()
-    main_category = scrapy.Field()
+    main_category = scrapy.Field() 
+    proj_details = scrapy.Field()
     currency = scrapy.Field() #need to take first element translate with https://transferwise.com/gb/blog/world-currency-symbols might need to scrape
+    # dates = scrapy.Field()
     # start_date = scrapy.Field()
     # deadline = scrapy.Field()
     goal = scrapy.Field()
@@ -22,6 +24,8 @@ class KicktraqItem(scrapy.Item):
     backers = scrapy.Field()
     status = scrapy.Field()
     description = scrapy.Field()
+    # start_day = scrapy.Field()
+    # year = scrapy.Field()
 
     # 'ID', 'name', 'category', 'main_category', 'currency', 'deadline',
     #    'goal', 'launched', 'pledged', 'state', 'backers', 'country',

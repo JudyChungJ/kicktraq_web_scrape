@@ -10,7 +10,7 @@ from scrapy.exporters import CsvItemExporter
 
 class WriteItemPipeline(object):
     def __init__(self):
-        self.filename = 'kicktraq_reviews.csv'
+        self.filename = 'kicktraq_first_350.csv'
 
     def open_spider(self, spider):
         self.csvfile = open(self.filename, 'wb')
@@ -23,4 +23,3 @@ class WriteItemPipeline(object):
         
     def process_item(self, item, spider):
         self.exporter.export_item(item)
-        return item
