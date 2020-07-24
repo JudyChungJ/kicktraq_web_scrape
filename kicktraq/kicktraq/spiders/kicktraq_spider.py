@@ -16,14 +16,16 @@ class KicktraqSpider(Spider):
 
     def parse_projects(self, response):
         projects = response.xpath('//div[@class="project-infobox"]') # goes to infobox that contains h2 project-cat and project-infobits
-
+        
+        # looping through each project infobox for the items
         for project in projects:
-            names = project.xpath('./h2/a/text()').extract_first() # 
-            print('='*50)
-            print(">>> name in for loop:", names)
-            print('='*50)
+            names = project.xpath('./h2/a/text()').extract_first() # getting project name 
+            # print('='*50) # debugging and status check
+            # print(">>> project name:", names)
+            # print('='*50)
             
             category = project.xpath('./div[@class="project-cat"]/a/@href').extract() #project-cat href as string
+            # checking if category has sub/category, assigning first el in category list to main_category, and first and second (if present) to category 
             main_category = ''
             if len(category) == 1:
                 main_category = category[0].strip('/').replace('categories/','')
@@ -32,8 +34,10 @@ class KicktraqSpider(Spider):
                 main_category = category[0].strip('/').replace('categories/','')
                 category = category[1].strip('/').replace('categories/','').replace('/','|')
 
+            # entire contents of details - will extract start times and deadlines in python from text    
             proj_details = project.xpath('.//div[@class="project-details"]//text()').extract() 
             
+            # 
             try:
                 money = project.xpath('.//div[@class="project-details"]//text()[2]').extract_first() 
                 currency, pledged, goal = [s.replace(',', '') for s in [str(el) for el in re.findall(' (.)(.*) of .(.*) ' , money)[0]]]
@@ -67,7 +71,7 @@ class KicktraqSpider(Spider):
                 backers = project.xpath('.//div[@class="project-details"]/text()[1]').extract_first()
                 backers = int(re.findall('Backers: (\d*)', backers)[0])
             except Exception as e:
-                print(e)
+                backers = None
 
             status = project.xpath('.//div[@class="project-pledgilizer"]//h5/text()').extract_first()
 
